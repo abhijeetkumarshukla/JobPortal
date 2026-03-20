@@ -12,7 +12,7 @@ const createJob = async (req, res) => {
       company,
       location,
       salary,
-      createdBy: req.user.id, // 👈 who created the job
+      createdBy: req.user.userID, // 👈 who created the job
     });
 
     await newJob.save();

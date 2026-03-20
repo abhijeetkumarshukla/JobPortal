@@ -1,5 +1,5 @@
 const express = require('express');
-const { applyJob, getAllApplications, getMyApplications, updateApplicationStatus } = require('../controllers/applicationControllers');
+const { applyJob, getAllApplications, getMyApplications, updateApplicationStatus, getApplicationsByJob } = require('../controllers/applicationControllers');
 const authMiddleware = require('../middleware/authMiddleware');
 const roleMiddleware = require('../middleware/roleMiddleware');
 
@@ -9,5 +9,5 @@ applicationRouter.post('/apply/:jobId', authMiddleware, roleMiddleware("user"), 
 applicationRouter.get('/all',authMiddleware,roleMiddleware("admin"), getAllApplications) 
 applicationRouter.get('/my', authMiddleware, roleMiddleware("user"), getMyApplications)
 applicationRouter.patch("/status/:applicationId",authMiddleware, roleMiddleware("recruiter","admin"),updateApplicationStatus);
-
+applicationRouter.get("/job/:jobId", authMiddleware, roleMiddleware("recruiter"), getApplicationsByJob );
 module.exports = applicationRouter

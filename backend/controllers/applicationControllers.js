@@ -124,11 +124,32 @@ const updateApplicationStatus = async (req, res) => {
     });
   }
 };
+const getApplicationsByJob = async (req, res) => {
+  try {
+
+    const { jobId } = req.params;
+
+    const applications = await ApplicationModel.find({
+      job: jobId
+    })
+      .populate("user", "name email")
+      .populate("job", "title");
+
+    res.status(200).json({ applications });
+
+  } catch (error) {
+    res.status(500).json({
+      message: "Error fetching applications",
+      error: error.message
+    });
+  }
+};
 
 
 module.exports = {
   applyJob,
   getAllApplications,
   getMyApplications,
-  updateApplicationStatus
+  updateApplicationStatus,
+  getApplicationsByJob
 };
